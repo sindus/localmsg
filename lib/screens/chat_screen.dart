@@ -80,9 +80,9 @@ class _ChatScreenState extends State<ChatScreen> {
     if (mounted) {
       setState(() => _sending = false);
       if (!ok) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.chatSendFailed)));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppLocalizations.of(context)!.chatSendFailed)),
+        );
       }
     }
   }

@@ -35,6 +35,13 @@
   "renameDialogTitle": "Nome di questo dispositivo",
   "cancel": "Annulla",
   "save": "Salva",
+  "delete": "Elimina",
+
+  "deleteConversationTitle": "Eliminare la conversazione?",
+  "deleteConversationBody": "La cronologia dei messaggi con {name} verrà eliminata. Questa azione non può essere annullata.",
+  "deleteAllTitle": "Eliminare tutte le conversazioni?",
+  "deleteAllBody": "Tutta la cronologia dei messaggi verrà eliminata definitivamente. Questa azione non può essere annullata.",
+  "deleteAllSettingsLabel": "Elimina tutte le conversazioni",
 
   "deviceTypeMobile": "Cellulare",
   "deviceTypeDesktop": "Computer"

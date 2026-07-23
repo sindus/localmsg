@@ -35,7 +35,10 @@ class LocaleService extends ChangeNotifier {
     final saved = await SharedPreferencesAsync().getString(_prefKey);
     _locale = saved != null
         ? Locale(saved)
-        : resolveDefaultLocale(PlatformDispatcher.instance.locale, supportedLocales);
+        : resolveDefaultLocale(
+            PlatformDispatcher.instance.locale,
+            supportedLocales,
+          );
     notifyListeners();
   }
 

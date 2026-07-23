@@ -6,6 +6,7 @@ import '../design/typography.dart';
 import '../l10n/app_localizations.dart';
 import '../services/chat_store.dart';
 import '../widgets/avatar.dart';
+import '../widgets/confirm_dialog.dart';
 import 'chat_screen.dart';
 import 'nearby_screen.dart';
 
@@ -71,80 +72,100 @@ class ConversationsScreen extends StatelessWidget {
                   const Divider(color: AppColors.borderSubtle, height: 1),
               itemBuilder: (context, index) {
                 final c = conversations[index];
-                return InkWell(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          ChatScreen(peerId: c.peerId, peerAlias: c.alias),
+                return Dismissible(
+                  key: ValueKey(c.peerId),
+                  direction: DismissDirection.endToStart,
+                  background: Container(
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    color: Colors.redAccent,
+                    child: const Icon(
+                      Icons.delete_outline,
+                      color: Colors.white,
                     ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 13),
-                    child: Row(
-                      children: [
-                        Avatar(id: c.peerId, name: c.alias),
-                        const SizedBox(width: 14),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      c.alias,
-                                      style: AppTypography.listTitle,
-                                    ),
-                                  ),
-                                  Text(
-                                    _formatTime(c.lastTimestamp),
-                                    style: const TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 12,
-                                      color: AppColors.textDim,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 3),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      c.lastText,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AppTypography.body,
-                                    ),
-                                  ),
-                                  if (c.unreadCount > 0) ...[
-                                    const SizedBox(width: 8),
-                                    Container(
-                                      width: 20,
-                                      height: 20,
-                                      alignment: Alignment.center,
-                                      decoration: const BoxDecoration(
-                                        color: AppColors.accent,
-                                        shape: BoxShape.circle,
-                                      ),
+                  confirmDismiss: (_) => confirmDelete(
+                    context,
+                    title: l10n.deleteConversationTitle,
+                    body: l10n.deleteConversationBody(c.alias),
+                  ),
+                  onDismissed: (_) =>
+                      context.read<ChatStore>().deleteConversation(c.peerId),
+                  child: InkWell(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            ChatScreen(peerId: c.peerId, peerAlias: c.alias),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 13),
+                      child: Row(
+                        children: [
+                          Avatar(id: c.peerId, name: c.alias),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
                                       child: Text(
-                                        '${c.unreadCount}',
-                                        style: const TextStyle(
-                                          fontFamily: 'Inter',
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w700,
-                                          color: AppColors.onAccent,
-                                        ),
+                                        c.alias,
+                                        style: AppTypography.listTitle,
+                                      ),
+                                    ),
+                                    Text(
+                                      _formatTime(c.lastTimestamp),
+                                      style: const TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 12,
+                                        color: AppColors.textDim,
                                       ),
                                     ),
                                   ],
-                                ],
-                              ),
-                            ],
+                                ),
+                                const SizedBox(height: 3),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        c.lastText,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: AppTypography.body,
+                                      ),
+                                    ),
+                                    if (c.unreadCount > 0) ...[
+                                      const SizedBox(width: 8),
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        alignment: Alignment.center,
+                                        decoration: const BoxDecoration(
+                                          color: AppColors.accent,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Text(
+                                          '${c.unreadCount}',
+                                          style: const TextStyle(
+                                            fontFamily: 'Inter',
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.onAccent,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );

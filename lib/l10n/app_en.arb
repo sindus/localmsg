@@ -43,6 +43,14 @@
   "renameDialogTitle": "Device name",
   "cancel": "Cancel",
   "save": "Save",
+  "delete": "Delete",
+
+  "deleteConversationTitle": "Delete conversation?",
+  "deleteConversationBody": "This will remove your message history with {name}. This can't be undone.",
+  "@deleteConversationBody": {"placeholders": {"name": {"type": "String"}}},
+  "deleteAllTitle": "Delete all conversations?",
+  "deleteAllBody": "This will permanently remove all message history. This can't be undone.",
+  "deleteAllSettingsLabel": "Delete All Conversations",
 
   "deviceTypeMobile": "Mobile",
   "deviceTypeDesktop": "Desktop"

@@ -100,4 +100,67 @@ void main() {
       expect(bytes, greaterThan(0));
     },
   );
+
+  test(
+    'deleteConversation removes messages and the index entry for that peer only',
+    () async {
+      final message = ChatMessage(
+        fromId: 'peer-1',
+        fromAlias: 'Bob',
+        text: 'Hey',
+        timestamp: DateTime.utc(2026, 1, 1),
+        isMine: false,
+      );
+      await repository.appendMessage('peer-1', message);
+      await repository.recordInIndex(
+        'peer-1',
+        alias: 'Bob',
+        message: message,
+        incrementUnread: true,
+      );
+      await repository.appendMessage('peer-2', message);
+      await repository.recordInIndex(
+        'peer-2',
+        alias: 'Carol',
+        message: message,
+        incrementUnread: true,
+      );
+
+      await repository.deleteConversation('peer-1');
+
+      expect(await repository.loadMessages('peer-1'), isEmpty);
+      final summaries = repository.conversationSummaries();
+      expect(summaries.map((s) => s.peerId), ['peer-2']);
+    },
+  );
+
+  test('deleteAllConversations clears every conversation', () async {
+    final message = ChatMessage(
+      fromId: 'peer-1',
+      fromAlias: 'Bob',
+      text: 'Hey',
+      timestamp: DateTime.utc(2026, 1, 1),
+      isMine: false,
+    );
+    await repository.appendMessage('peer-1', message);
+    await repository.recordInIndex(
+      'peer-1',
+      alias: 'Bob',
+      message: message,
+      incrementUnread: true,
+    );
+    await repository.appendMessage('peer-2', message);
+    await repository.recordInIndex(
+      'peer-2',
+      alias: 'Carol',
+      message: message,
+      incrementUnread: true,
+    );
+
+    await repository.deleteAllConversations();
+
+    expect(repository.conversationSummaries(), isEmpty);
+    expect(await repository.loadMessages('peer-1'), isEmpty);
+    expect(await repository.loadMessages('peer-2'), isEmpty);
+  });
 }

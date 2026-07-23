@@ -100,6 +100,18 @@ class ChatRepository {
     });
   }
 
+  Future<void> deleteConversation(String peerId) async {
+    await Hive.deleteBoxFromDisk('chat_$peerId');
+    await _indexBox.delete(peerId);
+  }
+
+  Future<void> deleteAllConversations() async {
+    for (final peerId in _indexBox.keys.toList()) {
+      await Hive.deleteBoxFromDisk('chat_$peerId');
+    }
+    await _indexBox.clear();
+  }
+
   Future<void> markConversationRead(String peerId) async {
     final existing = _indexBox.get(peerId);
     if (existing == null) return;

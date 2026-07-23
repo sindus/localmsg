@@ -35,6 +35,13 @@
   "renameDialogTitle": "Nombre de este dispositivo",
   "cancel": "Cancelar",
   "save": "Guardar",
+  "delete": "Eliminar",
+
+  "deleteConversationTitle": "¿Eliminar la conversación?",
+  "deleteConversationBody": "Se eliminará el historial de mensajes con {name}. Esta acción no se puede deshacer.",
+  "deleteAllTitle": "¿Eliminar todas las conversaciones?",
+  "deleteAllBody": "Se eliminará permanentemente todo el historial de mensajes. Esta acción no se puede deshacer.",
+  "deleteAllSettingsLabel": "Eliminar todas las conversaciones",
 
   "deviceTypeMobile": "Móvil",
   "deviceTypeDesktop": "Ordenador"

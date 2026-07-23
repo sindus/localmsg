@@ -54,6 +54,20 @@ class ChatStore extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> deleteConversation(String peerId) async {
+    _messagesByPeerId.remove(peerId);
+    await repository.deleteConversation(peerId);
+    loadSummaries();
+    notifyListeners();
+  }
+
+  Future<void> deleteAllConversations() async {
+    _messagesByPeerId.clear();
+    await repository.deleteAllConversations();
+    loadSummaries();
+    notifyListeners();
+  }
+
   void setViewing(String? peerId) {
     currentlyViewedPeerId = peerId;
     if (peerId != null) {

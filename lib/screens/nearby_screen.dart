@@ -63,7 +63,9 @@ class _NearbyScreenState extends State<NearbyScreen> {
           if (peers.isEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 24),
-              child: Center(child: Text(l10n.nearbyEmpty, style: AppTypography.body)),
+              child: Center(
+                child: Text(l10n.nearbyEmpty, style: AppTypography.body),
+              ),
             ),
           for (final peer in peers) ...[
             PeerTile(
@@ -71,7 +73,8 @@ class _NearbyScreenState extends State<NearbyScreen> {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => ChatScreen(peerId: peer.id, peerAlias: peer.alias),
+                  builder: (_) =>
+                      ChatScreen(peerId: peer.id, peerAlias: peer.alias),
                 ),
               ),
             ),

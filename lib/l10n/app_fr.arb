@@ -35,6 +35,13 @@
   "renameDialogTitle": "Nom de cet appareil",
   "cancel": "Annuler",
   "save": "Enregistrer",
+  "delete": "Supprimer",
+
+  "deleteConversationTitle": "Supprimer la conversation ?",
+  "deleteConversationBody": "L'historique des messages avec {name} sera supprimé. Cette action est irréversible.",
+  "deleteAllTitle": "Supprimer toutes les conversations ?",
+  "deleteAllBody": "Tout l'historique des messages sera définitivement supprimé. Cette action est irréversible.",
+  "deleteAllSettingsLabel": "Supprimer toutes les conversations",
 
   "deviceTypeMobile": "Mobile",
   "deviceTypeDesktop": "Ordinateur"

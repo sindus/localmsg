@@ -35,6 +35,13 @@
   "renameDialogTitle": "Name dieses Geräts",
   "cancel": "Abbrechen",
   "save": "Speichern",
+  "delete": "Löschen",
+
+  "deleteConversationTitle": "Unterhaltung löschen?",
+  "deleteConversationBody": "Der Nachrichtenverlauf mit {name} wird gelöscht. Dies kann nicht rückgängig gemacht werden.",
+  "deleteAllTitle": "Alle Unterhaltungen löschen?",
+  "deleteAllBody": "Der gesamte Nachrichtenverlauf wird endgültig gelöscht. Dies kann nicht rückgängig gemacht werden.",
+  "deleteAllSettingsLabel": "Alle Unterhaltungen löschen",
 
   "deviceTypeMobile": "Mobilgerät",
   "deviceTypeDesktop": "Computer"
