@@ -58,6 +58,10 @@ jobs:
           # scanner never sees them and won't copy them on its own.
           cp -a "$BUNDLE"/. "$APPDIR/usr/bin/"
 
+          # linuxdeploy matches the icon file's basename against the .desktop
+          # Icon= key, so it must be named exactly "localmsg.png".
+          cp macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_256.png localmsg.png
+
           curl -fsSL -o linuxdeploy -L "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage"
           curl -fsSL -o appimagetool -L "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
           chmod +x linuxdeploy appimagetool
@@ -65,7 +69,7 @@ jobs:
           ./linuxdeploy --appdir "$APPDIR" \
             -e "$APPDIR/usr/bin/localmsg" \
             -d packaging/linux/localmsg.desktop \
-            -i macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_256.png
+            -i localmsg.png
 
           ./appimagetool "$APPDIR" localmsg.AppImage
 
