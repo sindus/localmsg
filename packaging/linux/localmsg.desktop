@@ -6,4 +6,5 @@ Exec=localmsg
 Icon=localmsg
 Categories=Network;Chat;
 Terminal=false
+StartupWMClass=com.sikander.localmsg
 Version=1.0
