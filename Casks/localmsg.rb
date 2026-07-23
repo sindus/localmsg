@@ -1,6 +1,6 @@
 cask "localmsg" do
   version "0.2.0"
-  sha256 "f39401584f6f3ac2553d576e4804af9db7fefda06159ea7ca05a01bd51ce64cb"
+  sha256 "664e30caf059753c3ea3d76d27fc59333fd8a1ed8f28278bfe11a04a363576aa"
 
   url "https://github.com/sindus/localmsg/releases/download/v#{version}/localmsg-macos.zip"
   name "LocalMsg"
