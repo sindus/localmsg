@@ -6,6 +6,9 @@
 #define MyAppPublisher "Sikander RAVATE"
 #define MyAppExeName "localmsg.exe"
 #define MyReleaseDir "..\..\build\windows\x64\runner\Release"
+; Must match NotificationService's appUserModelId (lib/services/notification_service.dart) —
+; toast notifications are silently dropped without a Start Menu shortcut carrying this AUMID.
+#define MyAppUserModelID "com.sikander.localmsg"
 
 [Setup]
 AppId={{A6C1D9C1-6E9B-4C21-8B7B-6D3B6D2F6C10}
@@ -34,9 +37,9 @@ Name: "desktopicon"; Description: "Créer un raccourci sur le Bureau"; GroupDesc
 Source: "{#MyReleaseDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; AppUserModelID: "{#MyAppUserModelID}"
 Name: "{group}\Désinstaller {#MyAppName}"; Filename: "{uninstallexe}"
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; AppUserModelID: "{#MyAppUserModelID}"
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "Lancer {#MyAppName}"; Flags: nowait postinstall skipifsilent

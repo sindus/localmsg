@@ -6,14 +6,16 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 
 import '../models/chat_message.dart';
 import 'chat_store.dart';
+import 'notification_service.dart';
 
 /// Tiny HTTP server that receives messages posted by other peers and
 /// pushes them into [ChatStore]. Bound to an OS-assigned port (0) so
 /// multiple instances can coexist on one machine during development.
 class ChatServer {
   final ChatStore chatStore;
+  final NotificationService notificationService;
 
-  ChatServer({required this.chatStore});
+  ChatServer({required this.chatStore, required this.notificationService});
 
   HttpServer? _server;
 
@@ -31,7 +33,15 @@ class ChatServer {
       final body = await request.readAsString();
       final json = jsonDecode(body) as Map<String, dynamic>;
       final message = ChatMessage.fromJson(json, isMine: false);
-      chatStore.add(message.fromId, message);
+      await chatStore.add(message.fromId, message.fromAlias, message);
+
+      if (chatStore.currentlyViewedPeerId != message.fromId) {
+        await notificationService.showMessage(
+          title: message.fromAlias,
+          body: message.text,
+        );
+      }
+
       return shelf.Response.ok('ok');
     } catch (_) {
       return shelf.Response.badRequest(body: 'invalid payload');

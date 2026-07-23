@@ -1,62 +1,41 @@
 import 'package:flutter/material.dart';
 
+import '../design/colors.dart';
+import '../design/typography.dart';
 import '../models/chat_message.dart';
 
 class MessageBubble extends StatelessWidget {
   final ChatMessage message;
+  final double maxWidthFraction;
+  final double radius;
 
-  const MessageBubble({super.key, required this.message});
-
-  String _formatTime(DateTime time) {
-    final h = time.hour.toString().padLeft(2, '0');
-    final m = time.minute.toString().padLeft(2, '0');
-    return '$h:$m';
-  }
+  const MessageBubble({
+    super.key,
+    required this.message,
+    this.maxWidthFraction = 0.76,
+    this.radius = 18,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final isMine = message.isMine;
 
     return Align(
       alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.75,
+          maxWidth: MediaQuery.of(context).size.width * maxWidthFraction,
         ),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
         decoration: BoxDecoration(
-          color: isMine
-              ? theme.colorScheme.primary
-              : theme.colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(12),
+          color: isMine ? AppColors.accent : AppColors.panel2,
+          borderRadius: BorderRadius.circular(radius),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              message.text,
-              style: TextStyle(
-                color: isMine
-                    ? theme.colorScheme.onPrimary
-                    : theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Text(
-              _formatTime(message.timestamp),
-              style: TextStyle(
-                fontSize: 11,
-                color:
-                    (isMine
-                            ? theme.colorScheme.onPrimary
-                            : theme.colorScheme.onSurfaceVariant)
-                        .withValues(alpha: 0.7),
-              ),
-            ),
-          ],
+        child: Text(
+          message.text,
+          style: AppTypography.bubbleText.copyWith(
+            color: isMine ? AppColors.onAccent : AppColors.text,
+          ),
         ),
       ),
     );
